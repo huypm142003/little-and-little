@@ -13,21 +13,21 @@ const DetailEvent = () => {
         <img
           src={LeftFlags}
           alt="LeftFlags"
-          className="absolute left-[-10px] top-3"
+          className="absolute left-[-25px] top-0"
         />
         <Card className="mt-[-2px] bg-transparent border-0">
-          <Row className="flex items-center justify-center my-3">
+          <Row className="flex items-center justify-center">
             <Col>
-              <h1 className="text-6xl iciel-koni text-white font-black leading-[100px]">
+              <h1 className="text-6xl iciel-koni text-white font-black leading-[70px]">
                 Sự kiện 1
               </h1>
             </Col>
           </Row>
 
-          <Row className="mt-11">
+          <Row className="mt-[38px]">
             <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px]">
-              <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed px-[20px] py-[43.5px]">
-                <Row gutter={24}>
+              <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed px-[20px] py-[5.7px]">
+                <Row gutter={24} className="my-[15px]">
                   <Col className="max-w-[32.8%]">
                     <img src={Event4} alt="Event1" className="rounded-[20px]" />
                     <Space className="flex items-center justify-start mt-4">
@@ -44,8 +44,8 @@ const DetailEvent = () => {
                     </h1>
                   </Col>
                   <Col className="max-w-[23.2%]">
-                    <p className="text-[#000] montserrat text-base font-medium leading-[24px] text-justify">
-                      <span className="text-[#fa7d09] text-[22px] font-bold leading-[24px]">
+                    <p className="text-[#000] montserrat text-base font-medium leading-[25px] text-justify">
+                      <span className="text-[#fa7d09] text-[22px] font-bold leading-[25px]">
                         Lorem Ipsum
                       </span>{" "}
                       is simply dummy text of the printing and typesetting
@@ -61,7 +61,7 @@ const DetailEvent = () => {
                   </Col>
                   <Col className="max-w-[22%]">
                     <img src={Event1} alt="Event1" className="rounded-[20px]" />
-                    <p className="text-[#000] montserrat text-base font-medium leading-[24px] text-justify mt-5">
+                    <p className="text-[#000] montserrat text-base font-medium leading-[26px] text-justify mt-5">
                       Lorem Ipsum is not simply random text. It has roots in a
                       piece of classical Latin literature from 45 BC, making it
                       over 2000 years old. words, consectetur, from a Lorem
@@ -70,7 +70,7 @@ const DetailEvent = () => {
                     </p>
                   </Col>
                   <Col className="max-w-[22%]">
-                    <p className="text-[#000] montserrat text-base font-medium leading-[24px] text-justify mb-5">
+                    <p className="text-[#000] montserrat text-base font-medium leading-[26px] text-justify mb-5">
                       Lorem Ipsum is not simply random text. It has roots in a
                       piece of classical Latin literature from 45 BC, making it
                       over 2000 years old. words, consectetur, from a Lorem
@@ -87,7 +87,7 @@ const DetailEvent = () => {
         <img
           src={RightFlags}
           alt="RightFlags"
-          className="absolute right-[-2px] top-[-53px]"
+          className="absolute right-[-30px] top-[-70px]"
         />
       </div>
     </div>

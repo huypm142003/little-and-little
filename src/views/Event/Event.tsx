@@ -50,7 +50,7 @@ const Event = () => {
         <img
           src={LeftFlags}
           alt="LeftFlags"
-          className="absolute left-[-10px] top-3"
+          className="absolute left-[-25px] top-0"
         />
         <Card className="mt-[-2px] bg-transparent border-0">
           <Row className="flex items-center justify-center my-3">
@@ -226,7 +226,7 @@ const Event = () => {
         <img
           src={RightFlags}
           alt="RightFlags"
-          className="absolute right-[-2px] top-[-53px]"
+          className="absolute right-[-30px] top-[-70px]"
         />
       </div>
     </div>
