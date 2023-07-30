@@ -5,13 +5,14 @@
 @font-face {
   font-family: "iCiel Koni";
   src: local("iCiel Koni"),
-    url("./font/iCiel_Koni/iCiel\ Koni.otf") format("truetype");
+    url("./assets/font/iCiel_Koni/iCiel\ Koni.otf") format("truetype");
 }
 
 @font-face {
   font-family: "Montserrat";
   src: local("Montserrat"),
-    url("./font/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+    url("./assets/font/Montserrat/Montserrat-VariableFont_wght.ttf")
+      format("truetype");
 }
 
 .montserrat {
@@ -24,28 +25,114 @@
 
 .header {
   box-shadow: 0px 4px 35px rgba(161.5, 58.14, 0, 0.75);
-  /* Làm thành hình vòng cung ở dưới với chiều dài bằng 100% */
-  /* border-radius: 0 0 50% 50% / 0 0 100% 100%; */
   border-radius: 0% 0% 80% 80% / 0% 0% 38% 38%;
   position: absolute;
   width: 100%;
-  z-index: 999999;
+  z-index: 999;
+  /* background: url("./assets/images/Header.svg") no-repeat center center !important;
+  background-size: contain; */
+}
+
+.card-header {
+  border: none;
+  background: url("./assets/images/CardHeader.svg") no-repeat center center;
+  background-size: contain;
+}
+
+.ant-card.ant-card-bordered.card-header div.ant-card-body {
+  padding: 5px;
 }
 
 .bg-gradient {
-  background: linear-gradient(0deg, #FF8B2C 2%, #FF8D2A 4%, #FFA413 38%, #FFB105 69%, #FFB600 97%);
+  background: radial-gradient(
+    97.91% 60.14% at 50% 50%,
+    #ffdb7e 0%,
+    #ff7a00 100%
+  );
 }
 
 .card-bg {
-  border: none;
-  background: linear-gradient(0deg, #FFC42C 7%, #FFD600 97%, #FFa426 38%, #FFa426 69%, #FFa426 97%);
-  z-index: 1;
+  background: url("./assets/images/Background.svg") no-repeat center center;
+  background-size: cover;
 }
 
-/* .ant-card .ant-card-body {
-  padding: 18px;
-} */
+.card-bg-event {
+  background: url("./assets/images/PaperCannons.svg"),
+    url("./assets/images/Background.svg") no-repeat center center;
+  background-size: contain, cover;
+}
 
 .ant-card.ant-card-bordered.card div.ant-card-body {
   padding: 6px;
+}
+
+.ant-card.ant-card-bordered.card-event div.ant-card-body {
+  padding: 0;
+}
+
+.custom-input {
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: -1px 3px 3px 0px rgba(178, 91, 11, 0.5) inset;
+  padding: 10.6px;
+}
+
+.custom-button {
+  background: url("./assets/images/Button.svg") no-repeat center center;
+  background-size: contain;
+  width: 38px;
+  box-shadow: 0px 3px 2px 0px #de9959;
+  border: none;
+}
+
+.button-submit {
+  background: url("./assets/images/SubmitButton.svg") no-repeat center center;
+  background-size: contain;
+  box-shadow: 0px 4px 8px 0px rgba(160, 14, 14, 0.45);
+  border: none;
+}
+
+.anticon.anticon-calendar svg,
+.anticon.anticon-caret-down svg {
+  font-size: 25px;
+}
+
+
+.ant-menu-horizontal {
+  border: none;
+  position: relative;
+}
+
+.ant-menu-overflow-item.ant-menu-item.ant-menu-item-only-child {
+  margin: 0px 40px;
+  color: #ddd;
+}
+
+.ant-menu-light.ant-menu-horizontal > .ant-menu-item-selected {
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 30px;
+}
+
+.ant-menu-light
+  .ant-menu-item:not(.ant-menu-item-selected):not(
+    .ant-menu-submenu-selected
+  ):hover {
+  color: #fff;
+  border: none;
+}
+
+.ant-menu-light.ant-menu-horizontal > .ant-menu-item:hover::after,
+.ant-menu-light.ant-menu-horizontal > .ant-menu-item-selected::after {
+  border: none;
+}
+
+ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light,
+ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light
+  li.ant-menu-overflow-item.ant-menu-item.ant-menu-item-only-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  padding: 0px 20px;
 }

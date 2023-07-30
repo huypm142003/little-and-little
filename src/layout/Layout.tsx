@@ -24,12 +24,9 @@ function getItem(
 }
 
 const menuItems: MenuItem[] = [
-  // getItem(<Link to="/home">Trang chủ</Link>, "home"),
-  // getItem(<Link to="/event">Sự kiện</Link>, "event"),
-  // getItem(<Link to="/contact">Liên hệ</Link>, "ticket"),
-  getItem("Trang chủ", "home"),
-  getItem("Sự kiện", "event"),
-  getItem("Liên hệ", "contact"),
+  getItem(<Link to="/home">Trang chủ</Link>, "home"),
+  getItem(<Link to="/event">Sự kiện</Link>, "event"),
+  getItem(<Link to="/contact">Liên hệ</Link>, "contact"),
 ];
 type LayoutProps = {
   content: React.ReactNode;
@@ -45,24 +42,25 @@ const Layouts: React.FC<LayoutProps> = ({ content }) => {
 
   return (
     <Layout>
-      <div className="">
-        <Header className="bg-[#ed7200] flex items-center justify-around py-12 header">
+      <Header className="bg-[#ed7200] flex items-center justify-around py-12 header">
+        <div>
           <img src={LittleLogoHorizontal} alt="Logo" />
-          <Menu
-            mode="horizontal"
-            theme="light"
-            className="bg-[#ed7200] montserrat text-white text-lg font-bold flex justify-between"
-            items={menuItems}
-            selectedKeys={[selectedKey]}
-          ></Menu>
-          <Space>
-            <img src={Phone} alt="Phone" />
-            <span className="text-base font-bold montserrat text-white">
-              0123456789
-            </span>
-          </Space>
-        </Header>
-      </div>
+        </div>
+        <Menu
+          mode="horizontal"
+          theme="light"
+          className="bg-transparent montserrat text-white text-lg font-bold"
+          items={menuItems}
+          selectedKeys={[selectedKey]}
+        ></Menu>
+        <Space>
+          <img src={Phone} alt="Phone" />
+          <span className="text-base font-bold montserrat text-white">
+            0123456789
+          </span>
+        </Space>
+      </Header>
+
       <Content>
         <div className="site-layout-content">{content}</div>
       </Content>

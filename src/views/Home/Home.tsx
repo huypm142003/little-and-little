@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row } from "antd";
+import { Button, Card, Col, Form, Input, Row } from "antd";
 import Layouts from "../../layout/Layout";
 import DamSenLogo from "../../assets/images/DamSenLogo.svg";
 import Star from "../../assets/images/Star.svg";
@@ -10,92 +10,93 @@ import HotAirBalloon2 from "../../assets/images/HotAirBalloon2.svg";
 import HotAirBalloon3 from "../../assets/images/HotAirBalloon3.svg";
 import HotAirBalloon5 from "../../assets/images/HotAirBalloon5.svg";
 import HotAirBalloon6 from "../../assets/images/HotAirBalloon6.svg";
+import { CalendarOutlined, CaretDownOutlined } from "@ant-design/icons";
 
 const Home = () => {
-  const content = (
-    <div className="bg-gradient mt-[60px] px-12 pb-8 relative">
-      <Card className="p-8 card-bg">
-        <Row className="flex items-center mt-1 mb-8">
-          <img src={DamSenLogo} alt="Dam Sen Logo" className="w-[150px]" />
-          <h1 className="iciel-koni text-6xl text-white uppercase w-[350px]">
-            đầm sen park
-          </h1>
-        </Row>
-        <Row gutter={28} className="relative">
-          <Col span={15}>
-            <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px]">
-              <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed pb-20 px-[9px]">
-                <Row className="my-7">
-                  <Col>
-                    <p className="text-[#23221F] text-lg montserrat font-normal leading-[30px]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse ac mollis justo. Etiam volutpat tellus quis
-                      risus volutpat, ut posuere ex facilisis.
-                    </p>
-                  </Col>
-                </Row>
-                <Row className="mb-7">
-                  <Col>
-                    <p className="text-[#23221F] text-lg montserrat font-normal leading-[30px]">
-                      Suspendisse iaculis libero lobortis condimentum gravida.
-                      Aenean auctor iaculis risus, lobortis molestie lectus
-                      consequat a.
-                    </p>
-                  </Col>
-                </Row>
-                <Row className="flex items-center justify-center mb-[2px]">
-                  <Col span={2} className="ml-[59px]">
-                    <div className="flex items-center justify-center">
-                      <img src={Star} alt="Star" className="w-[40px]" />
-                    </div>
-                  </Col>
-                  <Col span={20}>
-                    <h2 className="text-[#23221F] text-xl montserrat font-bold leading-[36px]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </h2>
-                  </Col>
-                </Row>
-                <Row className="flex items-center justify-center mb-[2px]">
-                  <Col span={2} className="ml-[59px]">
-                    <div className="flex items-center justify-center">
-                      <img src={Star} alt="Star" className="w-[40px]" />
-                    </div>
-                  </Col>
-                  <Col span={20}>
-                    <h2 className="text-[#23221F] text-xl montserrat font-bold leading-[36px]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </h2>
-                  </Col>
-                </Row>
-                <Row className="flex items-center justify-center mb-[2px]">
-                  <Col span={2} className="ml-[59px]">
-                    <div className="flex items-center justify-center">
-                      <img src={Star} alt="Star" className="w-[40px]" />
-                    </div>
-                  </Col>
-                  <Col span={20}>
-                    <h2 className="text-[#23221F] text-xl montserrat font-bold leading-[36px]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </h2>
-                  </Col>
-                </Row>
-                <Row className="flex items-center justify-center mb-[2px]">
-                  <Col span={2} className="ml-[59px]">
-                    <div className="flex items-center justify-center">
-                      <img src={Star} alt="Star" className="w-[40px]" />
-                    </div>
-                  </Col>
-                  <Col span={20}>
-                    <h2 className="text-[#23221F] text-xl montserrat font-bold leading-[36px]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </h2>
-                  </Col>
-                </Row>
-              </div>
-            </Card>
-          </Col>
-          <Col className="absolute top-[-0.2px] right-[-0.6%]">
-            <foreignObject x="130" y="250">
+  const home = (
+    <div className="bg-gradient mt-[60px] px-10 pb-5 relative">
+      <div className="card-bg p-10">
+        <Card className="mt-[-2px] bg-transparent border-0">
+          <Row className="flex items-center mt-1 mb-8">
+            <img src={DamSenLogo} alt="Dam Sen Logo" className="w-[150px]" />
+            <h1 className="iciel-koni text-6xl text-white uppercase w-[350px]">
+              đầm sen park
+            </h1>
+          </Row>
+          <Row gutter={28} className="relative">
+            <Col span={15}>
+              <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px]">
+                <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed pb-20 px-[15px]">
+                  <Row className="my-7">
+                    <Col>
+                      <p className="text-[#23221F] text-lg montserrat font-normal leading-[30px]">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Suspendisse ac mollis justo. Etiam volutpat tellus quis
+                        risus volutpat, ut posuere ex facilisis.
+                      </p>
+                    </Col>
+                  </Row>
+                  <Row className="mb-7">
+                    <Col>
+                      <p className="text-[#23221F] text-lg montserrat font-normal leading-[30px]">
+                        Suspendisse iaculis libero lobortis condimentum gravida.
+                        Aenean auctor iaculis risus, lobortis molestie lectus
+                        consequat a.
+                      </p>
+                    </Col>
+                  </Row>
+                  <Row className="flex items-center justify-center mb-[2px]">
+                    <Col span={2} className="ml-[59px]">
+                      <div className="flex items-center justify-center">
+                        <img src={Star} alt="Star" className="w-[40px]" />
+                      </div>
+                    </Col>
+                    <Col span={20}>
+                      <h2 className="text-[#23221F] text-xl montserrat font-bold leading-[36px]">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </h2>
+                    </Col>
+                  </Row>
+                  <Row className="flex items-center justify-center mb-[2px]">
+                    <Col span={2} className="ml-[59px]">
+                      <div className="flex items-center justify-center">
+                        <img src={Star} alt="Star" className="w-[40px]" />
+                      </div>
+                    </Col>
+                    <Col span={20}>
+                      <h2 className="text-[#23221F] text-xl montserrat font-bold leading-[36px]">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </h2>
+                    </Col>
+                  </Row>
+                  <Row className="flex items-center justify-center mb-[2px]">
+                    <Col span={2} className="ml-[59px]">
+                      <div className="flex items-center justify-center">
+                        <img src={Star} alt="Star" className="w-[40px]" />
+                      </div>
+                    </Col>
+                    <Col span={20}>
+                      <h2 className="text-[#23221F] text-xl montserrat font-bold leading-[36px]">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </h2>
+                    </Col>
+                  </Row>
+                  <Row className="flex items-center justify-center mb-[2px]">
+                    <Col span={2} className="ml-[59px]">
+                      <div className="flex items-center justify-center">
+                        <img src={Star} alt="Star" className="w-[40px]" />
+                      </div>
+                    </Col>
+                    <Col span={20}>
+                      <h2 className="text-[#23221F] text-xl montserrat font-bold leading-[36px]">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      </h2>
+                    </Col>
+                  </Row>
+                </div>
+              </Card>
+            </Col>
+            <Col className="absolute top-[-0.2px] right-[-0.6%]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 300 584"
@@ -109,78 +110,144 @@ const Home = () => {
                   fill="#FDE8B3"
                 />
               </svg>
-            </foreignObject>
-          </Col>
-          <Col span={9}>
-            <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px]">
-              <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed pb-20 px-[9px]">
-                <Row className="my-7">
-                  <Col>
-                    <p className="text-[#23221F] text-lg montserrat font-normal leading-[30px]">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Suspendisse ac mollis justo. Etiam volutpat tellus quis
-                      risus volutpat, ut posuere ex facilisis.
-                    </p>
-                  </Col>
-                </Row>
-                <Row className="mb-7">
-                  <Col>
-                    <p className="text-[#23221F] text-lg montserrat font-normal leading-[30px]">
-                      Suspendisse iaculis libero lobortis condimentum gravida.
-                      Aenean auctor iaculis risus, lobortis molestie lectus
-                      consequat a.
-                    </p>
-                  </Col>
-                </Row>
-              </div>
-            </Card>
-          </Col>
-        </Row>
+            </Col>
+            <Col
+              span={9}
+              className="flex flex-col items-center justify-between"
+            >
+              <Card className="card-header text-center w-96 h-[60px] absolute z-[999] top-[-3%]">
+                <h1 className="uppercase iciel-koni text-[26px] font-black text-white">
+                  vé của bạn
+                </h1>
+              </Card>
+              <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px]">
+                <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed px-[15px]">
+                  <Form className="mt-[45.1px]">
+                    <Row gutter={16} className="flex items-center">
+                      <Col span={20}>
+                        <Form.Item>
+                          <Input
+                            className="custom-input"
+                            placeholder="Gói gia đình"
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col span={4}>
+                        <Form.Item>
+                          <Button
+                            className="px-[11px] py-[20px] border-0 flex justify-center items-center custom-button rounded-lg"
+                            type="primary"
+                            htmlType="button"
+                          >
+                            <CaretDownOutlined />
+                          </Button>
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                    <Row gutter={16} className="flex items-center">
+                      <Col span={8}>
+                        <Form.Item>
+                          <Input
+                            className="custom-input"
+                            placeholder="Số lượng vé"
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item>
+                          <Input
+                            className="custom-input"
+                            placeholder="Ngày sử dụng"
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col span={1}>
+                        <Form.Item>
+                          <Button
+                            className="px-[11px] py-[20px] border-0 flex justify-center items-center custom-button rounded-lg"
+                            type="primary"
+                            htmlType="button"
+                          >
+                            <CalendarOutlined />
+                          </Button>
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                    <Form.Item>
+                      <Input className="custom-input" placeholder="Họ và tên" />
+                    </Form.Item>
+                    <Form.Item>
+                      <Input
+                        className="custom-input"
+                        placeholder="Số điện thoại"
+                      />
+                    </Form.Item>
+                    <Form.Item>
+                      <Input
+                        className="custom-input"
+                        placeholder="Địa chỉ email"
+                      />
+                    </Form.Item>
+                    <Form.Item className="flex items-center justify-center">
+                      <Button
+                        className="button-submit flex justify-center items-start text-white iciel-koni text-[26px] font-black rounded-2xl w-[275px] h-[51px]"
+                        type="primary"
+                        htmlType="submit"
+                      >
+                        Đặt vé
+                      </Button>
+                    </Form.Item>
+                  </Form>
+                </div>
+              </Card>
+            </Col>
+          </Row>
+          <img
+            src={LisaArnold}
+            alt="Lisa Arnold"
+            className="absolute bottom-[-20px] left-[-80px] w-[190px] z-10"
+          />
+          <img
+            src={HotAirBalloon2}
+            alt="Hot Air Balloon"
+            className="absolute bottom-[-60px] left-1/4 w-[100px] z-[0]"
+          />
+          <img
+            src={HotAirBalloon3}
+            alt="Hot Air Balloon"
+            className="absolute bottom-[-37px] right-[-33px] w-[110px] z-[0]"
+          />
+          <img
+            src={HotAirBalloon5}
+            alt="Hot Air Balloon"
+            className="absolute top-[-17px] left-[53%] w-[110px] z-[0]"
+          />
+          <img
+            src={HotAirBalloon3}
+            alt="Hot Air Balloon"
+            className="absolute top-[45px] left-[40%] w-[110px] z-[0]"
+          />
+          <img
+            src={GroupPersion}
+            alt="Group Persion"
+            className="absolute top-[-90px] right-[-50px] w-[620px] z-[0]"
+          />
+        </Card>
         <img
-          src={LisaArnold}
-          alt="Lisa Arnold"
-          className="absolute bottom-0 left-[-48px] w-[185px] z-10"
-        />
-        <img
-          src={HotAirBalloon2}
+          src={HotAirBalloon1}
           alt="Hot Air Balloon"
-          className="absolute bottom-[-31px] left-1/4 w-[100px] z-[0]"
+          className="absolute top-1/2 right-[-10px] w-[105px] z-[9999999] transform -translate-y-1/2"
         />
         <img
-          src={HotAirBalloon3}
+          src={HotAirBalloon6}
           alt="Hot Air Balloon"
-          className="absolute bottom-[-20px] right-0 w-[110px] z-[0]"
+          className="absolute top-1/3 left-0 w-[105px] z-[9999999] transform -translate-y-1/2"
         />
-        <img
-          src={HotAirBalloon5}
-          alt="Hot Air Balloon"
-          className="absolute top-3 left-[53%] w-[110px] z-[0]"
-        />
-        <img
-          src={HotAirBalloon3}
-          alt="Hot Air Balloon"
-          className="absolute top-[70px] left-[40%] w-[110px] z-[0]"
-        />
-        <img
-          src={GroupPersion}
-          alt="Group Persion"
-          className="absolute top-[-50px] right-0 w-[600px] z-[0]"
-        />
-      </Card>
-      <img
-        src={HotAirBalloon1}
-        alt="Hot Air Balloon"
-        className="absolute top-1/2 right-0 w-[105px] z-[9999999] transform -translate-y-1/2"
-      />
-      <img
-        src={HotAirBalloon6}
-        alt="Hot Air Balloon"
-        className="absolute top-1/3 left-0 w-[105px] z-[9999999] transform -translate-y-1/2"
-      />
+      </div>
     </div>
   );
 
-  return <Layouts content={content} />;
+  return <Layouts content={home} />;
 };
 
 export default Home;
