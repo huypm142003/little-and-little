@@ -43,9 +43,9 @@ const Layouts: React.FC<LayoutProps> = ({ content }) => {
   return (
     <Layout>
       <Header className="bg-[#ed7200] flex items-center justify-around py-12 header">
-        <div>
+        <Link to="/"> 
           <img src={LittleLogoHorizontal} alt="Logo" />
-        </div>
+        </Link>
         <Menu
           mode="horizontal"
           theme="light"

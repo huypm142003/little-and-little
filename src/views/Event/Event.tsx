@@ -8,42 +8,43 @@ import RightFlags from "../../assets/images/RightFlags.svg";
 import { CalendarOutlined } from "@ant-design/icons";
 import { Carousel, CarouselItem } from "../../components/Carousel";
 
-const carouselItems = [
-  {
-    id: 1,
-    src: Event1,
-  },
-  {
-    id: 2,
-    src: Event1,
-  },
-  {
-    id: 3,
-    src: Event3,
-  },
-  {
-    id: 4,
-    src: Event4,
-  },
-  {
-    id: 5,
-    src: Event3,
-  },
-  {
-    id: 6,
-    src: Event1,
-  },
-  {
-    id: 7,
-    src: Event4,
-  },
-  {
-    id: 8,
-    src: Event3,
-  },
-];
-
 const Event = () => {
+
+  const carouselItems = [
+    {
+      id: 1,
+      src: Event1,
+    },
+    {
+      id: 2,
+      src: Event1,
+    },
+    {
+      id: 3,
+      src: Event3,
+    },
+    {
+      id: 4,
+      src: Event4,
+    },
+    {
+      id: 5,
+      src: Event3,
+    },
+    {
+      id: 6,
+      src: Event1,
+    },
+    {
+      id: 7,
+      src: Event4,
+    },
+    {
+      id: 8,
+      src: Event3,
+    },
+  ];
+
   const event = (
     <div className="bg-gradient mt-[60px] px-10 pb-5 relative">
       <div className="card-bg-event p-[50.2px]">
@@ -99,129 +100,6 @@ const Event = () => {
               </CarouselItem>
             )}
           />
-          {/* <Carousel className="flex justify-center items-center">
-          <Row
-             gutter={24}
-              className="flex flex-row items-center justify-center carousel"
-            >
-              <Col span={6}>
-                <Card className="card-event border-0 rounded-[20px]">
-                  <img src={Event1} alt="Event1" className="rounded-t-[20px]" />
-                  <div className="px-5 pt-3 pb-7">
-                    <h1 className="text-[#23221F] montserrat text-[28px] font-bold">
-                      Sự kiện 1
-                    </h1>
-                    <p className="text-[#6C7272] montserrat text-base font-medium leading-[26px]">
-                      Đầm sen Park
-                    </p>
-                    <Space className="flex items-center justify-start">
-                      <CalendarOutlined className="text-[#ffb809]" />
-                      <p className="text-[#444] text-base montserrat font-medium leading-[16px]">
-                        30/05/2021 - 01/06/2021
-                      </p>
-                    </Space>
-                    <h1 className="text-[#fa7d09] text-[30px] font-bold tracking-[0.16px] leading-[48px]">
-                      25.000 <span>VNĐ</span>
-                    </h1>
-                    <Button
-                      className="mt-3 flex button-submit justify-center items-center w-[200px] h-[40px] bg-[#FF000A] text-white iciel-koni rounded-lg border-0 border-b-[7px] border-b-[#9a010b] text-base font-black"
-                      type="primary"
-                      htmlType="button"
-                    >
-                      Xem chi tiết
-                    </Button>
-                  </div>
-                </Card>
-              </Col>
-              <Col span={6}>
-                <Card className="card-event border-0 rounded-[20px]">
-                  <img src={Event1} alt="Event1" className="rounded-t-[20px]" />
-                  <div className="px-5 pt-3 pb-7">
-                    <h1 className="text-[#23221F] montserrat text-[28px] font-bold">
-                      Sự kiện 2
-                    </h1>
-                    <p className="text-[#6C7272] montserrat text-base font-medium leading-[26px]">
-                      Đầm sen Park
-                    </p>
-                    <Space className="flex items-center justify-start">
-                      <CalendarOutlined className="text-[#ffb809]" />
-                      <p className="text-[#444] text-base montserrat font-medium leading-[16px]">
-                        30/05/2021 - 01/06/2021
-                      </p>
-                    </Space>
-                    <h1 className="text-[#fa7d09] text-[30px] font-bold tracking-[0.16px] leading-[48px]">
-                      25.000 <span>VNĐ</span>
-                    </h1>
-                    <Button
-                      className="mt-3 flex button-submit justify-center items-center w-[200px] h-[40px] bg-[#FF000A] text-white iciel-koni rounded-lg border-0 border-b-[7px] border-b-[#9a010b] text-base font-black"
-                      type="primary"
-                      htmlType="button"
-                    >
-                      Xem chi tiết
-                    </Button>
-                  </div>
-                </Card>
-              </Col>
-              <Col span={6}>
-                <Card className="card-event border-0 rounded-[20px]">
-                  <img src={Event3} alt="Event1" className="rounded-t-[20px]" />
-                  <div className="px-5 pt-3 pb-7">
-                    <h1 className="text-[#23221F] montserrat text-[28px] font-bold">
-                      Sự kiện 3
-                    </h1>
-                    <p className="text-[#6C7272] montserrat text-base font-medium leading-[26px]">
-                      Đầm sen Park
-                    </p>
-                    <Space className="flex items-center justify-start">
-                      <CalendarOutlined className="text-[#ffb809]" />
-                      <p className="text-[#444] text-base montserrat font-medium leading-[16px]">
-                        30/05/2021 - 01/06/2021
-                      </p>
-                    </Space>
-                    <h1 className="text-[#fa7d09] text-[30px] font-bold tracking-[0.16px] leading-[48px]">
-                      25.000 <span>VNĐ</span>
-                    </h1>
-                    <Button
-                      className="mt-3 flex button-submit justify-center items-center w-[200px] h-[40px] bg-[#FF000A] text-white iciel-koni rounded-lg border-0 border-b-[7px] border-b-[#9a010b] text-base font-black"
-                      type="primary"
-                      htmlType="button"
-                    >
-                      Xem chi tiết
-                    </Button>
-                  </div>
-                </Card>
-              </Col>
-              <Col span={6}>
-                <Card className="card-event border-0 rounded-[20px]">
-                  <img src={Event4} alt="Event1" className="rounded-t-[20px]" />
-                  <div className="px-5 pt-3 pb-7">
-                    <h1 className="text-[#23221F] montserrat text-[28px] font-bold">
-                      Sự kiện 4
-                    </h1>
-                    <p className="text-[#6C7272] montserrat text-base font-medium leading-[26px]">
-                      Đầm sen Park
-                    </p>
-                    <Space className="flex items-center justify-start">
-                      <CalendarOutlined className="text-[#ffb809]" />
-                      <p className="text-[#444] text-base montserrat font-medium leading-[16px]">
-                        30/05/2021 - 01/06/2021
-                      </p>
-                    </Space>
-                    <h1 className="text-[#fa7d09] text-[30px] font-bold tracking-[0.16px] leading-[48px]">
-                      25.000 <span>VNĐ</span>
-                    </h1>
-                    <Button
-                      className="mt-3 flex button-submit justify-center items-center w-[200px] h-[40px] bg-[#FF000A] text-white iciel-koni rounded-lg border-0 border-b-[7px] border-b-[#9a010b] text-base font-black"
-                      type="primary"
-                      htmlType="button"
-                    >
-                      Xem chi tiết
-                    </Button>
-                  </div>
-                </Card>
-              </Col>
-            </Row>
-          </Carousel> */}
         </Card>
         <img
           src={RightFlags}

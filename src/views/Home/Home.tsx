@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, Input, Row } from "antd";
 import Layouts from "../../layout/Layout";
 import DamSenLogo from "../../assets/images/DamSenLogo.svg";
 import Star from "../../assets/images/Star.svg";
-import LisaArnold from "../../assets/images/Lisa_Arnold.svg";
+import Lisa from "../../assets/images/Lisa.svg";
 import GroupPersion from "../../assets/images/GroupPersion.svg";
 import HotAirBalloon1 from "../../assets/images/HotAirBalloon1.svg";
 import HotAirBalloon2 from "../../assets/images/HotAirBalloon2.svg";
@@ -203,7 +203,7 @@ const Home = () => {
             </Col>
           </Row>
           <img
-            src={LisaArnold}
+            src={Lisa}
             alt="Lisa Arnold"
             className="absolute bottom-[-20px] left-[-80px] w-[190px] z-10"
           />
