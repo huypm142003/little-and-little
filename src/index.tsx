@@ -24,15 +24,21 @@ import "./assets/font/Montserrat/Montserrat-SemiBoldItalic.ttf";
 import "./assets/font/Montserrat/Montserrat-Thin.ttf";
 import "./assets/font/Montserrat/Montserrat-ThinItalic.ttf";
 import "./assets/font/Montserrat/Montserrat-VariableFont_wght.ttf";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./core/store/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

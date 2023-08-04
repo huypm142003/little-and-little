@@ -1,12 +1,102 @@
-import React from "react";
-import { Button, Card, Col, Form, Input, Modal, Row } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, DatePicker, Form, Input, Modal, Row } from "antd";
 import Layouts from "../../layout/Layout";
 import { CalendarOutlined } from "@ant-design/icons";
 import Trini from "../../assets/images/Trini.svg";
 import PaymentError from "../../assets/images/PaymentError.svg";
+import { firestore } from "../../core/firebase";
+import { useDispatch } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../core/store/store";
+import { createBooking } from "../../core/store/bookingSlice";
+import { useNavigate } from "react-router-dom";
+
+const formatCurrency = (number: any) => {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
 
 const Payment = () => {
   const [modal, setModal] = React.useState(false);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+
+  const dispatch = useDispatch<ThunkDispatch<RootState, null, any>>();
+
+  const sessionStorageBooking = sessionStorage.getItem("bookingInfo");
+
+  const [bookingInfomation, setBookingInfomation] = useState({
+    name: sessionStorageBooking ? JSON.parse(sessionStorageBooking).name : "",
+    email: sessionStorageBooking ? JSON.parse(sessionStorageBooking).email : "",
+    phone: sessionStorageBooking ? JSON.parse(sessionStorageBooking).phone : "",
+    dateUse: sessionStorageBooking
+      ? JSON.parse(sessionStorageBooking).dateUse
+      : new Date(),
+    quantity: sessionStorageBooking
+      ? JSON.parse(sessionStorageBooking).quantity
+      : "",
+    pack: sessionStorageBooking ? JSON.parse(sessionStorageBooking).pack : "",
+    packName: "",
+    cardNumber: "",
+    cardName: "",
+    cardExpiration: "",
+    cardCVV: "",
+    price: 0,
+    bookingId: Array.from({ length: 10 }, () =>
+      Math.random().toString(36).charAt(2)
+    ).join(""),
+  });
+  console.log("🚀 ~ Payment ~ bookingInfomation:", bookingInfomation);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const snapshot = firestore
+        .collection("packs")
+        .doc(bookingInfomation.pack)
+        .get();
+      const data = (await snapshot).data();
+      data &&
+        setBookingInfomation({
+          ...bookingInfomation,
+          packName: data.name,
+          price: data.price * bookingInfomation.quantity,
+        });
+    };
+
+    sessionStorage.getItem("bookingInfo") === null &&
+      (window.location.href = "/");
+    fetchData();
+  });
+
+  const handleDatePickerChange = (value: any) => {
+    setIsDatePickerOpen(false);
+    setBookingInfomation({
+      ...bookingInfomation,
+      cardExpiration: value.format("DD/MM/YYYY"),
+    });
+  };
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setBookingInfomation({ ...bookingInfomation, [name]: value });
+  };
+
+  const handlePayment = () => {
+    sessionStorage.removeItem("bookingInfo");
+    sessionStorage.setItem(
+      "bookingId",
+      JSON.stringify(bookingInfomation.bookingId)
+    );
+    dispatch(createBooking(bookingInfomation));
+    navigate("/payment-success");
+  };
+
+  const packName = bookingInfomation.packName
+    ? bookingInfomation.packName.split(" ")[1] +
+      " " +
+      bookingInfomation.packName.split(" ")[2]
+    : "mặc định";
 
   const payment = (
     <div className="bg-gradient mt-[60px] px-10 pb-5 relative">
@@ -23,12 +113,12 @@ const Payment = () => {
             <Col span={15}>
               <Card className="card-header-large flex items-center pb-2 text-center left-32 h-[70px] absolute z-[999] top-[-3%]">
                 <h1 className="uppercase iciel-koni text-[26px] font-black text-white">
-                  vé cổng - vé gia đình
+                  vé cổng - vé {packName}
                 </h1>
               </Card>
               <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px]">
                 <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed pb-[83px] px-20">
-                  <Form layout="vertical">
+                  <Form layout="vertical" autoComplete="off">
                     <Row gutter={30} className="mt-12">
                       <Col span={9}>
                         <Form.Item
@@ -41,7 +131,9 @@ const Payment = () => {
                         >
                           <Input
                             className="custom-input text-[#23221f] montserrat font-normal"
-                            value="360.000 vnđ"
+                            value={`${formatCurrency(
+                              bookingInfomation.price
+                            )} vnđ`}
                             readOnly
                           />
                         </Form.Item>
@@ -58,7 +150,11 @@ const Payment = () => {
                           <div className="flex items-center">
                             <Input
                               className="custom-input w-20 text-[#23221f] montserrat font-normal mr-2"
-                              value="4"
+                              name="quantity"
+                              min={1}
+                              value={bookingInfomation.quantity}
+                              onChange={handleInputChange}
+                              type="number"
                             />
                             <span className="text-[#23221f] montserrat font-normal">
                               vé
@@ -77,7 +173,7 @@ const Payment = () => {
                         >
                           <Input
                             className="custom-input text-[#23221f] montserrat font-normal"
-                            value="15/08/2021"
+                            value={bookingInfomation.dateUse}
                           />
                         </Form.Item>
                       </Col>
@@ -92,7 +188,7 @@ const Payment = () => {
                     >
                       <Input
                         className="custom-input w-[315px] text-[#23221f] montserrat font-normal"
-                        value={"Nguyễn Thị Ngọc Tuyền"}
+                        value={bookingInfomation.name}
                       />
                     </Form.Item>
                     <Form.Item
@@ -105,7 +201,7 @@ const Payment = () => {
                     >
                       <Input
                         className="custom-input w-[315px] text-[#23221f] montserrat font-normal"
-                        value={"0123456789"}
+                        value={bookingInfomation.phone}
                       />
                     </Form.Item>
                     <Form.Item
@@ -118,7 +214,7 @@ const Payment = () => {
                     >
                       <Input
                         className="custom-input w-[315px] text-[#23221f] montserrat font-normal"
-                        value={"tuyen.nguyen@alta.com.vn"}
+                        value={bookingInfomation.email}
                       />
                     </Form.Item>
                   </Form>
@@ -150,18 +246,34 @@ const Payment = () => {
               </Card>
               <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px]">
                 <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed px-20">
-                  <Form layout="vertical" className="mt-12">
+                  <Form
+                    layout="vertical"
+                    className="mt-12"
+                    form={form}
+                    onFinish={handlePayment}
+                  >
                     <Form.Item
                       className="payment-form-item"
+                      name="cardNumber"
                       label={
                         <span className="text-[#23221f] montserrat font-semibold leading-[30px]">
                           Số thẻ
                         </span>
                       }
+                      rules={[
+                        {
+                          required: true,
+                          message: "",
+                        },
+                      ]}
                     >
                       <Input
                         className="custom-input text-[#23221f] montserrat font-normal"
-                        value={"3641 4513 4369 7895"}
+                        placeholder="Số thẻ"
+                        name="cardNumber"
+                        value={bookingInfomation.cardNumber}
+                        onChange={handleInputChange}
+                        type="number"
                       />
                     </Form.Item>
                     <Form.Item
@@ -171,10 +283,20 @@ const Payment = () => {
                           Họ tên chủ thẻ
                         </span>
                       }
+                      name="cardName"
+                      rules={[
+                        {
+                          required: true,
+                          message: "",
+                        },
+                      ]}
                     >
                       <Input
                         className="custom-input text-[#23221f] montserrat font-normal"
-                        value={"NGUYEN THI NGOC TUYEN"}
+                        placeholder="Họ tên chủ thẻ"
+                        name="cardName"
+                        value={bookingInfomation.cardName}
+                        onChange={handleInputChange}
                       />
                     </Form.Item>
                     <Form.Item
@@ -184,12 +306,26 @@ const Payment = () => {
                           Ngày hết hạn
                         </span>
                       }
+                      // name="cardExpiration"
+                      // rules={[
+                      //   {
+                      //     required: true,
+                      //     message: "",
+                      //   },
+                      // ]}
                     >
                       <Row gutter={16} className="flex items-center">
                         <Col span={20}>
-                          <Input
-                            className="custom-input text-[#23221f] montserrat font-normal"
-                            value={"05/2025"}
+                          <DatePicker
+                            format={"DD/MM/YYYY"}
+                            placeholder="Ngày hết hạn"
+                            suffixIcon={false}
+                            className="custom-input w-full"
+                            superNextIcon={false}
+                            superPrevIcon={false}
+                            onChange={handleDatePickerChange}
+                            open={isDatePickerOpen}
+                            showToday={false}
                           />
                         </Col>
                         <Col span={4}>
@@ -197,6 +333,9 @@ const Payment = () => {
                             className="px-[11px] py-[20px] border-0 flex justify-center items-center custom-button rounded-lg"
                             type="primary"
                             htmlType="button"
+                            onClick={() =>
+                              setIsDatePickerOpen(!isDatePickerOpen)
+                            }
                           >
                             <CalendarOutlined />
                           </Button>
@@ -210,10 +349,20 @@ const Payment = () => {
                           CVV/CVC
                         </span>
                       }
+                      name="cardCVV"
+                      rules={[
+                        {
+                          required: true,
+                          message: "",
+                        },
+                      ]}
                     >
                       <Input
                         className="custom-input w-[100px] text-[#23221f] montserrat font-normal"
-                        value={"***"}
+                        placeholder="CVV/CVC"
+                        name="cardCVV"
+                        value={bookingInfomation.cardCVV}
+                        onChange={handleInputChange}
                       />
                     </Form.Item>
                     <Form.Item className="flex items-center justify-center mt-5">
@@ -221,7 +370,7 @@ const Payment = () => {
                         className="button-submit flex justify-center items-start text-white iciel-koni text-[26px] font-black rounded-2xl w-[275px] h-[51px]"
                         type="primary"
                         htmlType="submit"
-                        onClick={() => setModal(true)}
+                        onClick={() => form.submit()}
                       >
                         Thanh toán
                       </Button>

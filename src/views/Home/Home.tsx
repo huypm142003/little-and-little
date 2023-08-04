@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Card, Col, Form, Input, Row } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, DatePicker, Form, Input, Row, Select } from "antd";
 import Layouts from "../../layout/Layout";
 import DamSenLogo from "../../assets/images/DamSenLogo.svg";
 import Star from "../../assets/images/Star.svg";
@@ -11,8 +11,54 @@ import HotAirBalloon3 from "../../assets/images/HotAirBalloon3.svg";
 import HotAirBalloon5 from "../../assets/images/HotAirBalloon5.svg";
 import HotAirBalloon6 from "../../assets/images/HotAirBalloon6.svg";
 import { CalendarOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../core/store/store";
+import { getPack } from "../../core/store/packSlice";
 
 const Home = () => {
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
+  const dispatch = useDispatch<ThunkDispatch<RootState, null, any>>();
+  const listPack = useSelector((state: RootState) => state.firestorePack.data);
+
+  useEffect(() => {
+    dispatch(getPack());
+  }, [dispatch]);
+
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [bookingInfo, setBookingInfo] = useState({
+    pack: "",
+    quantity: "",
+    dateUse: "",
+    name: "",
+    phone: "",
+    email: "",
+  });
+
+  const handleSelectChange = (value: any) => {
+    setIsSelectOpen(false);
+    setBookingInfo({ ...bookingInfo, pack: value });
+  };
+
+  const handleDatePickerChange = (value: any) => {
+    setIsDatePickerOpen(false);
+    setBookingInfo({ ...bookingInfo, dateUse: value.format("DD/MM/YYYY") });
+  };
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setBookingInfo({ ...bookingInfo, [name]: value });
+  };
+
+  const handleBooking = () => {
+    sessionStorage.setItem("bookingInfo", JSON.stringify(bookingInfo));
+    navigate("/payment");
+  };
+
   const home = (
     <div className="bg-gradient mt-[60px] px-10 pb-5 relative">
       <div className="card-bg p-10">
@@ -121,14 +167,35 @@ const Home = () => {
                 </h1>
               </Card>
               <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px]">
-                <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed px-[15px]">
-                  <Form className="mt-[45.1px]">
+                <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed px-[34px]">
+                  <Form
+                    className="mt-[45.1px]"
+                    form={form}
+                    autoComplete="off"
+                    onFinish={handleBooking}
+                  >
                     <Row gutter={16} className="flex items-center">
                       <Col span={20}>
-                        <Form.Item>
-                          <Input
-                            className="custom-input"
-                            placeholder="Gói gia đình"
+                        <Form.Item
+                          name="pack"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Chọn gói vé!",
+                            },
+                          ]}
+                        >
+                          <Select
+                            className="custom-select"
+                            size="small"
+                            onChange={handleSelectChange}
+                            suffixIcon={null}
+                            open={isSelectOpen}
+                            placeholder="Chọn gói vé"
+                            options={listPack.map((item: any) => ({
+                              value: item.id,
+                              label: item.name,
+                            }))}
                           />
                         </Form.Item>
                       </Col>
@@ -138,6 +205,7 @@ const Home = () => {
                             className="px-[11px] py-[20px] border-0 flex justify-center items-center custom-button rounded-lg"
                             type="primary"
                             htmlType="button"
+                            onClick={() => setIsSelectOpen(!isSelectOpen)}
                           >
                             <CaretDownOutlined />
                           </Button>
@@ -146,18 +214,50 @@ const Home = () => {
                     </Row>
                     <Row gutter={16} className="flex items-center">
                       <Col span={8}>
-                        <Form.Item>
+                        <Form.Item
+                          name="quantity"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Nhập số lượng!",
+                            },
+                          ]}
+                        >
                           <Input
                             className="custom-input"
                             placeholder="Số lượng vé"
+                            name="quantity"
+                            value={bookingInfo.quantity}
+                            onChange={handleInputChange}
+                            type="number"
                           />
                         </Form.Item>
                       </Col>
                       <Col span={12}>
-                        <Form.Item>
-                          <Input
+                        <Form.Item
+                          name="date"
+                          rules={[
+                            {
+                              required: true,
+                              message: "Chọn ngày sử dụng!",
+                            },
+                          ]}
+                        >
+                          {/* <Input
                             className="custom-input"
                             placeholder="Ngày sử dụng"
+                            value={selectedDate ? selectedDate.toString() : ""}
+                          /> */}
+                          <DatePicker
+                            format={"DD/MM/YYYY"}
+                            placeholder="Ngày sử dụng"
+                            suffixIcon={false}
+                            className="custom-input w-full"
+                            superNextIcon={false}
+                            superPrevIcon={false}
+                            onChange={handleDatePickerChange}
+                            open={isDatePickerOpen}
+                            showToday={false}
                           />
                         </Form.Item>
                       </Col>
@@ -167,35 +267,77 @@ const Home = () => {
                             className="px-[11px] py-[20px] border-0 flex justify-center items-center custom-button rounded-lg"
                             type="primary"
                             htmlType="button"
+                            onClick={() =>
+                              setIsDatePickerOpen(!isDatePickerOpen)
+                            }
                           >
                             <CalendarOutlined />
                           </Button>
                         </Form.Item>
                       </Col>
                     </Row>
-                    <Form.Item>
-                      <Input className="custom-input" placeholder="Họ và tên" />
+                    <Form.Item
+                      name="name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng nhập tên!",
+                        },
+                      ]}
+                    >
+                      <Input
+                        className="custom-input"
+                        placeholder="Họ và tên"
+                        name="name"
+                        value={bookingInfo.name}
+                        onChange={handleInputChange}
+                      />
                     </Form.Item>
-                    <Form.Item>
+                    <Form.Item
+                      name="phone"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng nhập số điện thoại!",
+                        },
+                      ]}
+                    >
                       <Input
                         className="custom-input"
                         placeholder="Số điện thoại"
+                        name="phone"
+                        value={bookingInfo.phone}
+                        onChange={handleInputChange}
                       />
                     </Form.Item>
-                    <Form.Item>
+                    <Form.Item
+                      name="email"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng nhập địa chỉ email!",
+                        },
+                      ]}
+                    >
                       <Input
                         className="custom-input"
                         placeholder="Địa chỉ email"
+                        name="email"
+                        value={bookingInfo.email}
+                        onChange={handleInputChange}
                       />
                     </Form.Item>
                     <Form.Item className="flex items-center justify-center">
+                      {/* <Link to={`/payment`}> */}
                       <Button
                         className="button-submit flex justify-center items-start text-white iciel-koni text-[26px] font-black rounded-2xl w-[275px] h-[51px]"
                         type="primary"
                         htmlType="submit"
+                        onClick={() => form.submit()}
                       >
                         Đặt vé
                       </Button>
+                      {/* </Link> */}
                     </Form.Item>
                   </Form>
                 </div>

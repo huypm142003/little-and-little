@@ -1,44 +1,66 @@
 import { Button, Card, Col, QRCode, Row } from "antd";
 import Layouts from "../../layout/Layout";
-import { Carousel, CarouselItem } from "../../components/Carousel";
-import Tick from "../../assets/images/Tick.svg";
 import Alvin from "../../assets/images/Alvin.svg";
+import PaymentSuccessCarousel from "../../components/PaymentSuccessCarousel";
+import { useEffect, useState } from "react";
+import { firestore } from "../../core/firebase";
+
+interface Item {
+  name: string;
+  qrCode: JSX.Element;
+}
 
 const PaymentSuccess = () => {
-  const carouselItems = [
+
+  let bookingTicket:Item[] = [
     {
-      id: "ALT20210501",
-      qr: <QRCode bordered={false} value="https://www.facebook.com/" />,
+      name: "ALT20210501",
+      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
     },
     {
-      id: "ALT20210502",
-      qr: <QRCode bordered={false} value="https://www.facebook.com/" />,
+      name: "ALT20210502",
+      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
     },
     {
-      id: "ALT20210503",
-      qr: <QRCode bordered={false} value="https://www.facebook.com/" />,
+      name: "ALT20210503",
+      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
     },
     {
-      id: "ALT20210504",
-      qr: <QRCode bordered={false} value="https://www.facebook.com/" />,
+      name: "ALT20210504",
+      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
     },
     {
-      id: "ALT20210505",
-      qr: <QRCode bordered={false} value="https://www.facebook.com/" />,
+      name: "ALT20210505",
+      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
     },
     {
-      id: "ALT20210506",
-      qr: <QRCode bordered={false} value="https://www.facebook.com/" />,
+      name: "ALT20210506",
+      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
     },
     {
-      id: "ALT20210507",
-      qr: <QRCode bordered={false} value="https://www.facebook.com/" />,
+      name: "ALT20210507",
+      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
     },
     {
-      id: "ALT20210508",
-      qr: <QRCode bordered={false} value="https://www.facebook.com/" />,
+      name: "ALT20210508",
+      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
     },
   ];
+
+  useEffect(() => {
+    // sessionStorage.getItem("bookingId") === null &&
+    //   (window.location.href = "/");
+
+    const fetchData = async () => {
+      const snapshot = firestore
+        .collection("bookings")
+        .where("bookingId", "==", sessionStorage.getItem("bookingId"))
+        .get();
+      // const data = (await snapshot).docs[0].data();
+      // data && 
+    };
+    fetchData();
+  }, []);
 
   const patmentSuccess = (
     <div className="bg-gradient mt-[60px] px-10 pb-5 relative">
@@ -54,7 +76,7 @@ const PaymentSuccess = () => {
 
           <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px] mt-5 ml-10">
             <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed px-[60px] carousel-qr-code">
-              <Carousel
+              {/* <Carousel
                 visiblePage={true}
                 items={carouselItems}
                 renderItem={({ item, isSnapPoint }) => (
@@ -75,7 +97,8 @@ const PaymentSuccess = () => {
                     </Card>
                   </CarouselItem>
                 )}
-              />
+              /> */}
+              <PaymentSuccessCarousel items={bookingTicket} />
             </div>
           </Card>
           <Row

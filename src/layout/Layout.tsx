@@ -53,16 +53,19 @@ const Layouts: React.FC<LayoutProps> = ({ content }) => {
           items={menuItems}
           selectedKeys={[selectedKey]}
         ></Menu>
-        <Space>
-          <img src={Phone} alt="Phone" />
-          <span className="text-base font-bold montserrat text-white">
-            0123456789
-          </span>
-        </Space>
+
+        <a href="tel:+84123456789">
+          <Space>
+            <img src={Phone} alt="Phone" />
+            <span className="text-base font-bold montserrat text-white">
+              0123456789
+            </span>
+          </Space>
+        </a>
       </Header>
 
       <Content>
-        <div className="site-layout-content">{content}</div>
+        <div className="">{content}</div>
       </Content>
     </Layout>
   );

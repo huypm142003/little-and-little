@@ -15,7 +15,7 @@ const Router = () => {
       <Route path="/event/:id" element={<DetailEvent />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/payment" element={<Payment />} />
-      <Route path="/payment/success" element={<PaymentSuccess />} />
+      <Route path="/payment-success" element={<PaymentSuccess />} />
     </Routes>
   );
 };
