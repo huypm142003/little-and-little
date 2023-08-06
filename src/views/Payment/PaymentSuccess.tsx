@@ -1,66 +1,98 @@
 import { Button, Card, Col, QRCode, Row } from "antd";
 import Layouts from "../../layout/Layout";
 import Alvin from "../../assets/images/Alvin.svg";
-import PaymentSuccessCarousel from "../../components/PaymentSuccessCarousel";
 import { useEffect, useState } from "react";
-import { firestore } from "../../core/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../core/store/store";
+import { getBookingByBookingId } from "../../core/store/bookingSlice";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import PaymentSuccessCarousel from "../../components/carousel/PaymentSuccessCarousel";
 
 interface Item {
+  id: string;
   name: string;
   qrCode: JSX.Element;
+  dateUse: string;
 }
 
 const PaymentSuccess = () => {
+  const dispatch = useDispatch<ThunkDispatch<RootState, null, any>>();
+  const bookingData: any = useSelector(
+    (state: RootState) => state.firestoreBooking.data
+  );
 
-  let bookingTicket:Item[] = [
-    {
-      name: "ALT20210501",
-      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
-    },
-    {
-      name: "ALT20210502",
-      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
-    },
-    {
-      name: "ALT20210503",
-      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
-    },
-    {
-      name: "ALT20210504",
-      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
-    },
-    {
-      name: "ALT20210505",
-      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
-    },
-    {
-      name: "ALT20210506",
-      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
-    },
-    {
-      name: "ALT20210507",
-      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
-    },
-    {
-      name: "ALT20210508",
-      qrCode: <QRCode bordered={false} value="https://www.facebook.com/" />,
-    },
-  ];
+  const [bookingTicket, setBookingTicket] = useState<Item[]>([]);
 
   useEffect(() => {
-    // sessionStorage.getItem("bookingId") === null &&
-    //   (window.location.href = "/");
+    dispatch(
+      getBookingByBookingId(
+        JSON.parse(sessionStorage.getItem("bookingId") as string)
+      )
+    );
 
-    const fetchData = async () => {
-      const snapshot = firestore
-        .collection("bookings")
-        .where("bookingId", "==", sessionStorage.getItem("bookingId"))
-        .get();
-      // const data = (await snapshot).docs[0].data();
-      // data && 
-    };
-    fetchData();
-  }, []);
+    const ticketName = `ALT${new Date().getFullYear()}`;
+    const ticketArray: Item[] = [];
+    const ticketQuantity = bookingData.quantity;
+
+    for (let i = 0; i < ticketQuantity; i++) {
+      ticketArray.push({
+        id: bookingData.id + i,
+        name: ticketName + (i + 1).toString().padStart(4, "0"),
+        qrCode: (
+          <QRCode
+            bordered={false}
+            value={`${bookingData.bookingId} - ${
+              bookingData.dateUse
+            } - ${ticketName}${(i + 1).toString().padStart(4, "0")} - Vé Cổng ${
+              i + 1
+            }/${ticketQuantity}`}
+          />
+        ),
+        dateUse: bookingData.dateUse,
+      });
+    }
+
+    setBookingTicket(ticketArray);
+  }, [
+    bookingData.bookingId,
+    bookingData.dateUse,
+    bookingData.id,
+    bookingData.quantity,
+    dispatch,
+  ]);
+
+  const handleDownloadTicket = () => {
+    // capture lấy ra element có class là slick-track bỏ qua các element có class là slick-slide slick-cloned
+    const capture = document.querySelector(
+      ".slick-track:not(.slick-slide.slick-cloned)"
+    ) as HTMLElement;
+    html2canvas(capture).then((canvas) => {
+      const imgData = canvas.toDataURL("img/png");
+      const pdf = new jsPDF("landscape", "mm", "a4");
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 30;
+      pdf.addImage(
+        imgData,
+        "PNG",
+        imgX,
+        imgY,
+        imgWidth * ratio,
+        imgHeight * ratio
+      );
+      pdf.save("Vé Cổng.pdf");
+    });
+  };
+
+  const handleSendEmail = () => {
+    console.log("send email");
+  };
 
   const patmentSuccess = (
     <div className="bg-gradient mt-[60px] px-10 pb-5 relative">
@@ -76,28 +108,6 @@ const PaymentSuccess = () => {
 
           <Card className="card rounded-3xl z-[2] bg-[#fde8b3] border-0 border-b-[#ffca7b] border-b-[12px] mt-5 ml-10">
             <div className="border-[#FFB489] rounded-3xl bg-[#fff6d4] border-[4px] border-dashed px-[60px] carousel-qr-code">
-              {/* <Carousel
-                visiblePage={true}
-                items={carouselItems}
-                renderItem={({ item, isSnapPoint }) => (
-                  <CarouselItem key={item.id} isSnapPoint={isSnapPoint}>
-                    <Card className="card-event border-0 rounded-[20px] text-center">
-                      <div className="text-[#000] montserrat text-[22px] font-semibold p-5">
-                        {item.qr}
-                        <h3 className="text-3xl uppercase mt-3">{item.id}</h3>
-                        <h4 className="text-[#ffc226] text-[22px] uppercase mt-3">
-                          vé cổng
-                        </h4>
-                        <span className="leading-[10px] block">---</span>
-                        <p className="text-[#23221f] text-base font-normal mt-3">
-                          Ngày sử dụng: 31/05/2021
-                        </p>
-                        <img src={Tick} alt="Tick" className="mx-auto mt-3" />
-                      </div>
-                    </Card>
-                  </CarouselItem>
-                )}
-              /> */}
               <PaymentSuccessCarousel items={bookingTicket} />
             </div>
           </Card>
@@ -110,6 +120,7 @@ const PaymentSuccess = () => {
                 className="mt-3 button-submit flex justify-center items-start text-white iciel-koni text-base font-black rounded-lg w-[184px] h-[34px]"
                 type="primary"
                 htmlType="button"
+                onClick={handleDownloadTicket}
               >
                 Tải vé
               </Button>
@@ -119,6 +130,7 @@ const PaymentSuccess = () => {
                 className="mt-3 button-submit flex justify-center items-start text-white iciel-koni text-base font-black rounded-lg w-[184px] h-[34px]"
                 type="primary"
                 htmlType="button"
+                onClick={handleSendEmail}
               >
                 Gửi Email
               </Button>

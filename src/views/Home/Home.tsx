@@ -243,11 +243,6 @@ const Home = () => {
                             },
                           ]}
                         >
-                          {/* <Input
-                            className="custom-input"
-                            placeholder="Ngày sử dụng"
-                            value={selectedDate ? selectedDate.toString() : ""}
-                          /> */}
                           <DatePicker
                             format={"DD/MM/YYYY"}
                             placeholder="Ngày sử dụng"

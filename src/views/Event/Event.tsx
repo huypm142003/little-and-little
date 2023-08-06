@@ -7,14 +7,13 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../core/store/store";
 import { useEffect } from "react";
 import { getEvent } from "../../core/store/eventSlice";
-import EventCarousel from "../../components/EventCarousel";
+import EventCarousel from "../../components/carousel/EventCarousel";
 
 const Event = () => {
   const dispatch = useDispatch<ThunkDispatch<RootState, null, any>>();
   const listEvent = useSelector(
     (state: RootState) => state.firestoreEvent.data
   );
-  console.log("🚀 ~ Event ~ listEvent:", listEvent)
 
   useEffect(() => {
     dispatch(getEvent());
@@ -36,15 +35,6 @@ const Event = () => {
               </h1>
             </Col>
           </Row>
-
-          {/* <Carousel
-            items={carouselItems}
-            renderItem={({ item, isSnapPoint }) => (
-              <CarouselItem key={item.id} isSnapPoint={isSnapPoint}>
-                
-              </CarouselItem>
-            )}
-          /> */}
           <EventCarousel items={listEvent} />
         </Card>
         <img

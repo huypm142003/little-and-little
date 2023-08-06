@@ -47,9 +47,11 @@ const Payment = () => {
       Math.random().toString(36).charAt(2)
     ).join(""),
   });
-  console.log("🚀 ~ Payment ~ bookingInfomation:", bookingInfomation);
 
   useEffect(() => {
+    sessionStorage.getItem("bookingInfo") === null &&
+      (window.location.href = "/");
+
     const fetchData = async () => {
       const snapshot = firestore
         .collection("packs")
@@ -63,9 +65,6 @@ const Payment = () => {
           price: data.price * bookingInfomation.quantity,
         });
     };
-
-    sessionStorage.getItem("bookingInfo") === null &&
-      (window.location.href = "/");
     fetchData();
   });
 
@@ -306,13 +305,6 @@ const Payment = () => {
                           Ngày hết hạn
                         </span>
                       }
-                      // name="cardExpiration"
-                      // rules={[
-                      //   {
-                      //     required: true,
-                      //     message: "",
-                      //   },
-                      // ]}
                     >
                       <Row gutter={16} className="flex items-center">
                         <Col span={20}>
