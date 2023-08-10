@@ -50,22 +50,16 @@ const PaymentSuccessCarousel: React.FC<CarouselProps> = ({ items }) => {
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 600,
     slidesToShow: 4,
     slidesToScroll: 4,
-    prevArrow: (
-      <PrevButton
-        onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
-      />
-    ),
-    nextArrow: (
-      <NextButton
-        onClick={() =>
-          setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))
-        }
-      />
-    ),
+    prevArrow: <PrevButton />,
+    nextArrow: <NextButton />,
+    afterChange: (current: number) =>
+      current >= totalPages
+        ? setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages))
+        : setCurrentPage((prevPage) => Math.max(prevPage - 1, 1)),
   };
 
   return (

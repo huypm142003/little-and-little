@@ -1,4 +1,4 @@
-import { Button, Card, Col, QRCode, Row } from "antd";
+import { Button, Card, Col, QRCode, Row, notification } from "antd";
 import Layouts from "../../layout/Layout";
 import Alvin from "../../assets/images/Alvin.svg";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { getBookingByBookingId } from "../../core/store/bookingSlice";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import PaymentSuccessCarousel from "../../components/carousel/PaymentSuccessCarousel";
+import emailjs from "@emailjs/browser";
 
 interface Item {
   id: string;
@@ -64,10 +65,7 @@ const PaymentSuccess = () => {
   ]);
 
   const handleDownloadTicket = () => {
-    // capture lấy ra element có class là slick-track bỏ qua các element có class là slick-slide slick-cloned
-    const capture = document.querySelector(
-      ".slick-track:not(.slick-slide.slick-cloned)"
-    ) as HTMLElement;
+    const capture = document.querySelector(".slick-track") as HTMLElement;
     html2canvas(capture).then((canvas) => {
       const imgData = canvas.toDataURL("img/png");
       const pdf = new jsPDF("landscape", "mm", "a4");
@@ -90,8 +88,18 @@ const PaymentSuccess = () => {
     });
   };
 
-  const handleSendEmail = () => {
-    console.log("send email");
+  const handleSendEmail = (e: any) => {
+    e.preventDefault();
+    emailjs.sendForm(
+      "service_z36gaim",
+      "template_i3q6i3d",
+      e.target,
+      "ObrOXC0Tg-ynlgIzn"
+    );
+    notification.success({
+      message: "Gửi Email thành công! Vui lòng kiểm tra hộp thư của bạn.",
+      placement: "top",
+    });
   };
 
   const patmentSuccess = (
@@ -126,14 +134,36 @@ const PaymentSuccess = () => {
               </Button>
             </Col>
             <Col>
-              <Button
-                className="mt-3 button-submit flex justify-center items-start text-white iciel-koni text-base font-black rounded-lg w-[184px] h-[34px]"
-                type="primary"
-                htmlType="button"
-                onClick={handleSendEmail}
-              >
-                Gửi Email
-              </Button>
+              <form onSubmit={handleSendEmail} encType="multipart/form-data">
+                <input type="hidden" name="toEmail" value={bookingData.email} />
+                <input
+                  type="hidden"
+                  name="bookingId"
+                  value={bookingData.bookingId}
+                />
+                <input
+                  type="hidden"
+                  name="dateUse"
+                  value={bookingData.dateUse}
+                />
+                <input
+                  type="hidden"
+                  name="quantity"
+                  value={bookingData.quantity}
+                />
+                <input
+                  type="hidden"
+                  name="packName"
+                  value={bookingData.packName}
+                />
+                <Button
+                  className="mt-3 button-submit flex justify-center items-start text-white iciel-koni text-base font-black rounded-lg w-[184px] h-[34px]"
+                  type="primary"
+                  htmlType="submit"
+                >
+                  Gửi Email
+                </Button>
+              </form>
             </Col>
           </Row>
           <img

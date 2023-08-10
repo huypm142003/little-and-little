@@ -35,7 +35,7 @@ const Payment = () => {
       : new Date(),
     quantity: sessionStorageBooking
       ? JSON.parse(sessionStorageBooking).quantity
-      : "",
+      : "", 
     pack: sessionStorageBooking ? JSON.parse(sessionStorageBooking).pack : "",
     packName: "",
     cardNumber: "",
